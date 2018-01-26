@@ -35,6 +35,9 @@ public class Command {
 
     public final String feedbackToUser;
 
+    /**
+     * Overload constructor used by clear, exit, help, and list commands.
+     */
     public Command(String commandWord) {
         this.commandWord = commandWord;
         this.feedbackToUser = null;
@@ -43,7 +46,8 @@ public class Command {
     }
 
     /**
-     * @param targetIndex last visible listing index of the target person
+     * Overload constructor used by delete, view, and viewall commands.
+     * @param targetIndex last visible listing index of the target person.
      */
     public Command(String commandWord, int targetIndex) {
         this.setTargetIndex(targetIndex);
@@ -53,6 +57,9 @@ public class Command {
         this.person = null;
     }
 
+    /**
+     * Overload constructor for add command.
+     */
     public Command(String commandWord, Person person) {
         this.commandWord = commandWord;
         this.feedbackToUser = null;
@@ -61,7 +68,7 @@ public class Command {
     }
 
     /**
-     * Represents an incorrect command. Upon execution, produces some feedback to the user.
+     * Overload constructor for incorrect command.
      */
     public Command(String commandWord, String feedbackToUser) {
         this.commandWord = commandWord;
@@ -71,8 +78,7 @@ public class Command {
     }
 
     /**
-     * Finds and lists all persons in address book whose name contains any of the argument keywords.
-     * Keyword matching is case sensitive.
+     * Overload constructor for find command.
      */
     public Command(String commandWord, Set<String> keywords) {
         this.commandWord = commandWord;
@@ -82,8 +88,7 @@ public class Command {
     }
 
     /**
-     * Convenience Add constructor using raw values.
-     * Adds a person to the address book.
+     * Overload constructor for add command using person's raw values.
      * @throws IllegalValueException if any of the raw values are invalid
      */
     public Command(String commandWord,
@@ -111,8 +116,8 @@ public class Command {
     /**
      * Constructs a feedback message to summarise an operation that displayed a listing of persons.
      *
-     * @param personsDisplayed used to generate summary
-     * @return summary message for persons displayed
+     * @param personsDisplayed used to generate summary.
+     * @return summary message for persons displayed.
      */
     public static String getMessageForPersonListShownSummary(List<? extends ReadOnlyPerson> personsDisplayed) {
         return String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, personsDisplayed.size());
@@ -165,8 +170,8 @@ public class Command {
     /**
      * Retrieves all persons in the address book whose names contain some of the specified keywords.
      *
-     * @param keywords for searching
-     * @return list of persons found
+     * @param keywords for searching.
+     * @return list of persons found.
      */
     private List<ReadOnlyPerson> getPersonsWithNameContainingAnyKeyword(Set<String> keywords) {
         final List<ReadOnlyPerson> matchedPersons = new ArrayList<>();
@@ -194,7 +199,7 @@ public class Command {
     /**
      * Extracts the the target person in the last shown list from the given arguments.
      *
-     * @throws IndexOutOfBoundsException if the target index is out of bounds of the last viewed listing
+     * @throws IndexOutOfBoundsException if the target index is out of bounds of the last viewed listing.
      */
     protected ReadOnlyPerson getTargetPerson() throws IndexOutOfBoundsException {
         return relevantPersons.get(getTargetIndex() - DISPLAYED_INDEX_OFFSET);
@@ -208,6 +213,9 @@ public class Command {
         this.targetIndex = targetIndex;
     }
 
+    /**
+     * Adds a person to the address book.
+     */
     private CommandResult executeAddCommand(Person toAdd) {
         try {
             addressBook.addPerson(toAdd);
@@ -217,11 +225,17 @@ public class Command {
         }
     }
 
+    /**
+     * Clears the address book.
+     */
     private CommandResult executeClearCommand() {
         addressBook.clear();
         return new CommandResult(CLEAR_MESSAGE_SUCCESS);
     }
 
+    /**
+     * Deletes a person identified using it's last displayed index from the address book.
+     */
     private CommandResult executeDeleteCommand() {
         try {
             final ReadOnlyPerson target = getTargetPerson();
@@ -235,20 +249,33 @@ public class Command {
         }
     }
 
+    /**
+     * Terminates the program.
+     */
     private CommandResult executeExitCommand() {
         return new CommandResult(EXIT_MESSAGE_EXIT_ACKNOWEDGEMENT);
     }
 
+    /**
+     * Finds and lists all persons in address book whose name contains any of the argument keywords.
+     * Keyword matching is case sensitive.
+     */
     private CommandResult executeFindCommand() {
         final List<ReadOnlyPerson> personsFound = getPersonsWithNameContainingAnyKeyword(keywords);
         return new CommandResult(getMessageForPersonListShownSummary(personsFound), personsFound);
     }
 
+    /**
+     * Lists all persons in the address book to the user.
+     */
     private CommandResult executeListCommand() {
         List<ReadOnlyPerson> allPersons = addressBook.getAllPersons().immutableListView();
         return new CommandResult(getMessageForPersonListShownSummary(allPersons), allPersons);
     }
 
+    /**
+     * Shows help instructions.
+     */
     private CommandResult executeHelpCommand() {
         return new CommandResult(
                 ADD_MESSAGE_USAGE
@@ -263,10 +290,17 @@ public class Command {
         );
     }
 
+    /**
+     * Represents an incorrect command. Produces some feedback to the user.
+     */
     private CommandResult executeIncorrectCommand() {
         return new CommandResult(feedbackToUser);
     }
 
+    /**
+     * Shows all details of the person identified using the last displayed index.
+     * Private contact details are shown.
+     */
     private CommandResult executeViewAllCommand() {
         try {
             final ReadOnlyPerson target = getTargetPerson();
@@ -279,6 +313,10 @@ public class Command {
         }
     }
 
+    /**
+     * Shows details of the person identified using the last displayed index.
+     * Private contact details are not shown.
+     */
     private CommandResult executeViewCommand() {
         try {
             final ReadOnlyPerson target = getTargetPerson();
