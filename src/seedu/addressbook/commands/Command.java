@@ -101,8 +101,10 @@ public class Command {
             case CommandMessages.ADD_COMMAND_WORD:
                 return executeAddCommand(person);
             case CommandMessages.CLEAR_COMMAND_WORD:
-            default:
                 return executeClearCommand();
+            case CommandMessages.HELP_COMMAND_WORD:
+            default:
+                return executeHelpCommand();
         }
     };
 
@@ -143,5 +145,19 @@ public class Command {
     private CommandResult executeClearCommand() {
         addressBook.clear();
         return new CommandResult(CLEAR_MESSAGE_SUCCESS);
+    }
+
+    private CommandResult executeHelpCommand() {
+        return new CommandResult(
+                CommandMessages.ADD_MESSAGE_USAGE
+                        + "\n" + CommandMessages.DELETE_MESSAGE_USAGE
+                        + "\n" + CommandMessages.CLEAR_MESSAGE_USAGE
+                        + "\n" + CommandMessages.FIND_MESSAGE_USAGE
+                        + "\n" + CommandMessages.LIST_MESSAGE_USAGE
+                        + "\n" + CommandMessages.VIEW_MESSAGE_USAGE
+                        + "\n" + CommandMessages.VIEWALL_MESSAGE_USAGE
+                        + "\n" + CommandMessages.HELP_MESSAGE_USAGE
+                        + "\n" + CommandMessages.EXIT_MESSAGE_USAGE
+        );
     }
 }

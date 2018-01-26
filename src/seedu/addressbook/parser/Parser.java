@@ -16,7 +16,6 @@ import seedu.addressbook.commands.CommandMessages;
 import seedu.addressbook.commands.DeleteCommand;
 import seedu.addressbook.commands.ExitCommand;
 import seedu.addressbook.commands.FindCommand;
-import seedu.addressbook.commands.HelpCommand;
 import seedu.addressbook.commands.IncorrectCommand;
 import seedu.addressbook.commands.ListCommand;
 import seedu.addressbook.commands.ViewAllCommand;
@@ -100,7 +99,7 @@ public class Parser {
 
         case CommandMessages.HELP_COMMAND_WORD: // Fallthrough
         default:
-            return new HelpCommand();
+            return new Command(CommandMessages.HELP_COMMAND_WORD);
         }
     }
 

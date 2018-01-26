@@ -17,7 +17,6 @@ import seedu.addressbook.commands.CommandMessages;
 import seedu.addressbook.commands.DeleteCommand;
 import seedu.addressbook.commands.ExitCommand;
 import seedu.addressbook.commands.FindCommand;
-import seedu.addressbook.commands.HelpCommand;
 import seedu.addressbook.commands.IncorrectCommand;
 import seedu.addressbook.commands.ListCommand;
 import seedu.addressbook.commands.ViewAllCommand;
@@ -56,7 +55,7 @@ public class ParserTest {
     @Test
     public void parse_unknownCommandWord_returnsHelp() {
         final String input = "unknowncommandword arguments arguments";
-        parseAndAssertCommandType(input, HelpCommand.class);
+        parseAndAssertCommandType(input, CommandMessages.HELP_COMMAND_WORD);
     }
 
     /*
@@ -66,7 +65,7 @@ public class ParserTest {
     @Test
     public void parse_helpCommand_parsedCorrectly() {
         final String input = "help";
-        parseAndAssertCommandType(input, HelpCommand.class);
+        parseAndAssertCommandType(input, CommandMessages.HELP_COMMAND_WORD);
     }
 
     @Test
