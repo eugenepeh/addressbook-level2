@@ -14,7 +14,6 @@ import java.util.regex.Pattern;
 import seedu.addressbook.commands.Command;
 import seedu.addressbook.commands.CommandMessages;
 import seedu.addressbook.commands.IncorrectCommand;
-import seedu.addressbook.commands.ViewAllCommand;
 import seedu.addressbook.commands.ViewCommand;
 import seedu.addressbook.data.exception.IllegalValueException;
 
@@ -200,7 +199,7 @@ public class Parser {
 
         try {
             final int targetIndex = parseArgsAsDisplayedIndex(args);
-            return new ViewAllCommand(targetIndex);
+            return new Command(CommandMessages.VIEWALL_COMMAND_WORD, targetIndex);
         } catch (ParseException pe) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     CommandMessages.VIEWALL_MESSAGE_USAGE));

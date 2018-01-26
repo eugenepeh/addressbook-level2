@@ -131,6 +131,8 @@ public class Command {
                 return executeFindCommand();
             case CommandMessages.LIST_COMMAND_WORD:
                 return executeListCommand();
+            case CommandMessages.VIEWALL_COMMAND_WORD:
+                return executeViewAllCommand();
             case CommandMessages.HELP_COMMAND_WORD:
             default:
                 return executeHelpCommand();
@@ -239,5 +241,17 @@ public class Command {
                         + "\n" + CommandMessages.HELP_MESSAGE_USAGE
                         + "\n" + CommandMessages.EXIT_MESSAGE_USAGE
         );
+    }
+
+    private CommandResult executeViewAllCommand() {
+        try {
+            final ReadOnlyPerson target = getTargetPerson();
+            if (!addressBook.containsPerson(target)) {
+                return new CommandResult(Messages.MESSAGE_PERSON_NOT_IN_ADDRESSBOOK);
+            }
+            return new CommandResult(String.format(VIEWALL_MESSAGE_VIEW_PERSON_DETAILS, target.getAsTextShowAll()));
+        } catch (IndexOutOfBoundsException ie) {
+            return new CommandResult(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
     }
 }
