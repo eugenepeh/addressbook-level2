@@ -12,7 +12,6 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
-import seedu.addressbook.commands.AddCommand;
 import seedu.addressbook.commands.ClearCommand;
 import seedu.addressbook.commands.Command;
 import seedu.addressbook.commands.CommandMessages;
@@ -253,7 +252,7 @@ public class ParserTest {
     public void parse_addCommandValidPersonData_parsedCorrectly() {
         final Person testPerson = generateTestPerson();
         final String input = convertPersonToAddCommandString(testPerson);
-        final AddCommand result = parseAndAssertCommandType(input, AddCommand.class);
+        final Command result = parseAndAssertCommandType(input, CommandMessages.ADD_COMMAND_WORD);
         assertEquals(result.getPerson(), testPerson);
     }
 
@@ -266,7 +265,7 @@ public class ParserTest {
             input += " t/" + tag.tagName;
         }
 
-        final AddCommand result = parseAndAssertCommandType(input, AddCommand.class);
+        final Command result = parseAndAssertCommandType(input, CommandMessages.ADD_COMMAND_WORD);
         assertEquals(result.getPerson(), testPerson);
     }
 
@@ -320,6 +319,12 @@ public class ParserTest {
     private <T extends Command> T parseAndAssertCommandType(String input, Class<T> expectedCommandClass) {
         final Command result = parser.parseCommand(input);
         assertTrue(result.getClass().isAssignableFrom(expectedCommandClass));
+        return (T) result;
+    }
+
+    private <T extends Command> T parseAndAssertCommandType(String input, String expectedCommandClass) {
+        final Command result = parser.parseCommand(input);
+        assertTrue(result.getCommandWord().equals(expectedCommandClass));
         return (T) result;
     }
 }

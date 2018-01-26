@@ -84,8 +84,8 @@ public class AddCommandTest {
             boolean isPhonePrivate, String email, boolean isEmailPrivate, String address,
             boolean isAddressPrivate, Set<String> tags) {
         try {
-            new AddCommand(name, phone, isPhonePrivate, email, isEmailPrivate, address, isAddressPrivate,
-                    tags);
+            new Command(CommandMessages.ADD_COMMAND_WORD, name, phone, isPhonePrivate, email, isEmailPrivate, address,
+                    isAddressPrivate, tags);
         } catch (IllegalValueException e) {
             return;
         }
@@ -97,8 +97,8 @@ public class AddCommandTest {
 
     @Test
     public void addCommand_validData_correctlyConstructed() throws Exception {
-        AddCommand command = new AddCommand(Name.EXAMPLE, Phone.EXAMPLE, true, Email.EXAMPLE, false,
-                Address.EXAMPLE, true, EMPTY_STRING_LIST);
+        Command command = new Command(CommandMessages.ADD_COMMAND_WORD, Name.EXAMPLE, Phone.EXAMPLE, true,
+                Email.EXAMPLE, false, Address.EXAMPLE, true, EMPTY_STRING_LIST);
         ReadOnlyPerson p = command.getPerson();
 
         // TODO: add comparison of tags to person.equals and equality methods to
@@ -117,7 +117,7 @@ public class AddCommandTest {
     @Test
     public void addCommand_emptyAddressBook_addressBookContainsPerson() {
         Person p = TestUtil.generateTestPerson();
-        AddCommand command = new AddCommand(p);
+        Command command = new Command(CommandMessages.ADD_COMMAND_WORD, p);
         AddressBook book = new AddressBook();
         command.setData(book, EMPTY_PERSON_LIST);
         CommandResult result = command.execute();
@@ -134,7 +134,7 @@ public class AddCommandTest {
         Person p = TestUtil.generateTestPerson();
         AddressBook book = new AddressBook();
         book.addPerson(p);
-        AddCommand command = new AddCommand(p);
+        Command command = new Command(CommandMessages.ADD_COMMAND_WORD, p);
         command.setData(book, EMPTY_PERSON_LIST);
         CommandResult result = command.execute();
 

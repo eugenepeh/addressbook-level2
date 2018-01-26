@@ -11,7 +11,6 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import seedu.addressbook.commands.AddCommand;
 import seedu.addressbook.commands.ClearCommand;
 import seedu.addressbook.commands.Command;
 import seedu.addressbook.commands.CommandMessages;
@@ -119,7 +118,8 @@ public class Parser {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, CommandMessages.ADD_MESSAGE_USAGE));
         }
         try {
-            return new AddCommand(
+            return new Command(
+                    CommandMessages.ADD_COMMAND_WORD,
                     matcher.group("name"),
 
                     matcher.group("phone"),
