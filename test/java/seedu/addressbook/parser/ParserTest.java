@@ -15,6 +15,7 @@ import org.junit.Test;
 import seedu.addressbook.commands.AddCommand;
 import seedu.addressbook.commands.ClearCommand;
 import seedu.addressbook.commands.Command;
+import seedu.addressbook.commands.CommandMessages;
 import seedu.addressbook.commands.DeleteCommand;
 import seedu.addressbook.commands.ExitCommand;
 import seedu.addressbook.commands.FindCommand;
@@ -50,7 +51,7 @@ public class ParserTest {
     @Test
     public void parse_emptyInput_returnsIncorrect() {
         final String[] emptyInputs = { "", "  ", "\n  \n" };
-        final String resultMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE);
+        final String resultMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, CommandMessages.HELP_MESSAGE_USAGE);
         parseAndAssertIncorrectWithMessage(resultMessage, emptyInputs);
     }
 
@@ -95,7 +96,7 @@ public class ParserTest {
     @Test
     public void parse_deleteCommandNoArgs_errorMessage() {
         final String[] inputs = { "delete", "delete " };
-        final String resultMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
+        final String resultMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, CommandMessages.DELETE_MESSAGE_USAGE);
         parseAndAssertIncorrectWithMessage(resultMessage, inputs);
     }
 
@@ -117,7 +118,7 @@ public class ParserTest {
     @Test
     public void viewCommandNoArgs_errorMessage() {
         final String[] inputs = { "view", "view " };
-        final String resultMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewCommand.MESSAGE_USAGE);
+        final String resultMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, CommandMessages.VIEW_MESSAGE_USAGE);
         parseAndAssertIncorrectWithMessage(resultMessage, inputs);
     }
 
@@ -140,7 +141,7 @@ public class ParserTest {
     public void parse_viewAllCommandNoArgs_errorMessage() {
         final String[] inputs = { "viewall", "viewall " };
         final String resultMessage =
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewAllCommand.MESSAGE_USAGE);
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, CommandMessages.VIEWALL_MESSAGE_USAGE);
         parseAndAssertIncorrectWithMessage(resultMessage, inputs);
     }
 
@@ -171,7 +172,7 @@ public class ParserTest {
             "find "
         };
         final String resultMessage =
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, CommandMessages.FIND_MESSAGE_USAGE);
         parseAndAssertIncorrectWithMessage(resultMessage, inputs);
     }
 
@@ -215,7 +216,7 @@ public class ParserTest {
             // no address prefix
             String.format("add $s p/$s e/$s $s", Name.EXAMPLE, Phone.EXAMPLE, Email.EXAMPLE, Address.EXAMPLE)
         };
-        final String resultMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
+        final String resultMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, CommandMessages.ADD_MESSAGE_USAGE);
         parseAndAssertIncorrectWithMessage(resultMessage, inputs);
     }
 

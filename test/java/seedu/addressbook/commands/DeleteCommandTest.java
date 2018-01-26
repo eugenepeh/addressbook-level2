@@ -152,7 +152,7 @@ public class DeleteCommandTest {
 
         AddressBook expectedAddressBook = TestUtil.clone(addressBook);
         expectedAddressBook.removePerson(targetPerson);
-        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, targetPerson);
+        String expectedMessage = String.format(CommandMessages.DELETE_MESSAGE_DELETE_PERSON_SUCCESS, targetPerson);
 
         AddressBook actualAddressBook = TestUtil.clone(addressBook);
 
