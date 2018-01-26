@@ -12,7 +12,6 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
-import seedu.addressbook.commands.ClearCommand;
 import seedu.addressbook.commands.Command;
 import seedu.addressbook.commands.CommandMessages;
 import seedu.addressbook.commands.DeleteCommand;
@@ -73,7 +72,7 @@ public class ParserTest {
     @Test
     public void parse_clearCommand_parsedCorrectly() {
         final String input = "clear";
-        parseAndAssertCommandType(input, ClearCommand.class);
+        parseAndAssertCommandType(input, CommandMessages.CLEAR_COMMAND_WORD);
     }
 
     @Test

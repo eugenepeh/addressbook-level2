@@ -19,6 +19,7 @@ import java.util.Set;
 
 import static seedu.addressbook.commands.CommandMessages.ADD_MESSAGE_DUPLICATE_PERSON;
 import static seedu.addressbook.commands.CommandMessages.ADD_MESSAGE_SUCCESS;
+import static seedu.addressbook.commands.CommandMessages.CLEAR_MESSAGE_SUCCESS;
 import static seedu.addressbook.ui.TextUi.DISPLAYED_INDEX_OFFSET;
 
 /**
@@ -39,6 +40,10 @@ public class Command {
     }
 
     protected Command() {
+    }
+
+    public Command(String commandWord) {
+        this.commandWord = commandWord;
     }
 
     public Command(String commandWord, Person person) {
@@ -94,8 +99,10 @@ public class Command {
     public CommandResult execute(){
         switch (commandWord) {
             case CommandMessages.ADD_COMMAND_WORD:
-            default:
                 return executeAddCommand(person);
+            case CommandMessages.CLEAR_COMMAND_WORD:
+            default:
+                return executeClearCommand();
         }
     };
 
@@ -131,5 +138,10 @@ public class Command {
         } catch (UniquePersonList.DuplicatePersonException dpe) {
             return new CommandResult(ADD_MESSAGE_DUPLICATE_PERSON);
         }
+    }
+
+    private CommandResult executeClearCommand() {
+        addressBook.clear();
+        return new CommandResult(CLEAR_MESSAGE_SUCCESS);
     }
 }
