@@ -13,7 +13,6 @@ import java.util.regex.Pattern;
 
 import seedu.addressbook.commands.Command;
 import seedu.addressbook.commands.CommandMessages;
-import seedu.addressbook.commands.IncorrectCommand;
 import seedu.addressbook.data.exception.IllegalValueException;
 
 /**
@@ -59,7 +58,7 @@ public class Parser {
     public Command parseCommand(String userInput) {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
         if (!matcher.matches()) {
-            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, CommandMessages.HELP_MESSAGE_USAGE));
+            return new Command(CommandMessages.INCORRECT_COMMAND_WORD, String.format(MESSAGE_INVALID_COMMAND_FORMAT, CommandMessages.HELP_MESSAGE_USAGE));
         }
 
         final String commandWord = matcher.group("commandWord");
@@ -107,7 +106,7 @@ public class Parser {
         final Matcher matcher = PERSON_DATA_ARGS_FORMAT.matcher(args.trim());
         // Validate arg string format
         if (!matcher.matches()) {
-            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, CommandMessages.ADD_MESSAGE_USAGE));
+            return new Command(CommandMessages.INCORRECT_COMMAND_WORD, String.format(MESSAGE_INVALID_COMMAND_FORMAT, CommandMessages.ADD_MESSAGE_USAGE));
         }
         try {
             return new Command(
@@ -126,7 +125,7 @@ public class Parser {
                     getTagsFromArgs(matcher.group("tagArguments"))
             );
         } catch (IllegalValueException ive) {
-            return new IncorrectCommand(ive.getMessage());
+            return new Command(CommandMessages.INCORRECT_COMMAND_WORD, ive.getMessage());
         }
     }
 
@@ -163,9 +162,9 @@ public class Parser {
             final int targetIndex = parseArgsAsDisplayedIndex(args);
             return new Command(CommandMessages.DELETE_COMMAND_WORD, targetIndex);
         } catch (ParseException pe) {
-            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, CommandMessages.DELETE_MESSAGE_USAGE));
+            return new Command(CommandMessages.INCORRECT_COMMAND_WORD, String.format(MESSAGE_INVALID_COMMAND_FORMAT, CommandMessages.DELETE_MESSAGE_USAGE));
         } catch (NumberFormatException nfe) {
-            return new IncorrectCommand(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            return new Command(CommandMessages.INCORRECT_COMMAND_WORD, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
     }
 
@@ -181,10 +180,10 @@ public class Parser {
             final int targetIndex = parseArgsAsDisplayedIndex(args);
             return new Command(CommandMessages.VIEW_COMMAND_WORD, targetIndex);
         } catch (ParseException pe) {
-            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+            return new Command(CommandMessages.INCORRECT_COMMAND_WORD, String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     CommandMessages.VIEW_MESSAGE_USAGE));
         } catch (NumberFormatException nfe) {
-            return new IncorrectCommand(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            return new Command(CommandMessages.INCORRECT_COMMAND_WORD, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
     }
 
@@ -200,10 +199,10 @@ public class Parser {
             final int targetIndex = parseArgsAsDisplayedIndex(args);
             return new Command(CommandMessages.VIEWALL_COMMAND_WORD, targetIndex);
         } catch (ParseException pe) {
-            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+            return new Command(CommandMessages.INCORRECT_COMMAND_WORD, String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     CommandMessages.VIEWALL_MESSAGE_USAGE));
         } catch (NumberFormatException nfe) {
-            return new IncorrectCommand(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            return new Command(CommandMessages.INCORRECT_COMMAND_WORD, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
     }
 
@@ -233,7 +232,7 @@ public class Parser {
     private Command prepareFind(String args) {
         final Matcher matcher = KEYWORDS_ARGS_FORMAT.matcher(args.trim());
         if (!matcher.matches()) {
-            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+            return new Command(CommandMessages.INCORRECT_COMMAND_WORD, String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     CommandMessages.FIND_MESSAGE_USAGE));
         }
 

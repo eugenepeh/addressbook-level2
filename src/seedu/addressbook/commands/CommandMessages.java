@@ -41,6 +41,8 @@ public class CommandMessages {
     public static final String HELP_MESSAGE_USAGE = HELP_COMMAND_WORD + ": Shows program usage instructions.\n"
             + "Example: " + HELP_COMMAND_WORD;
 
+    public static final String INCORRECT_COMMAND_WORD = "incorrect";
+
     public static final String LIST_COMMAND_WORD = "list";
     public static final String LIST_MESSAGE_USAGE = LIST_COMMAND_WORD
             + ": Displays all persons in the address book as a list with index numbers.\n"

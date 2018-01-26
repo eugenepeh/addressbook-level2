@@ -33,27 +33,37 @@ public class Command {
     private Person person;
     private final Set<String> keywords;
 
+    public final String feedbackToUser;
+
     /**
      * @param targetIndex last visible listing index of the target person
      */
     public Command(String commandWord, int targetIndex) {
         this.commandWord = commandWord;
         this.setTargetIndex(targetIndex);
-        this.keywords = null;
-    }
-
-    protected Command() {
+        this.feedbackToUser = null;
         this.keywords = null;
     }
 
     public Command(String commandWord) {
         this.commandWord = commandWord;
+        this.feedbackToUser = null;
         this.keywords = null;
     }
 
     public Command(String commandWord, Person person) {
         this.commandWord = commandWord;
         this.person = person;
+        this.feedbackToUser = null;
+        this.keywords = null;
+    }
+
+    /**
+     * Represents an incorrect command. Upon execution, produces some feedback to the user.
+     */
+    public Command(String commandWord, String feedbackToUser) {
+        this.commandWord = commandWord;
+        this.feedbackToUser = feedbackToUser;
         this.keywords = null;
     }
 
@@ -63,6 +73,7 @@ public class Command {
      */
     public Command(String commandWord, Set<String> keywords) {
         this.commandWord = commandWord;
+        this.feedbackToUser = null;
         this.keywords = keywords;
     }
 
@@ -89,6 +100,7 @@ public class Command {
                 new Address(address, isAddressPrivate),
                 new UniqueTagList(tagSet)
         );
+        this.feedbackToUser = null;
         this.keywords = null;
     }
 
@@ -129,6 +141,8 @@ public class Command {
                 return executeExitCommand();
             case CommandMessages.FIND_COMMAND_WORD:
                 return executeFindCommand();
+            case CommandMessages.INCORRECT_COMMAND_WORD:
+                return executeIncorrectCommand();
             case CommandMessages.LIST_COMMAND_WORD:
                 return executeListCommand();
             case CommandMessages.VIEWALL_COMMAND_WORD:
@@ -243,6 +257,10 @@ public class Command {
                         + "\n" + CommandMessages.HELP_MESSAGE_USAGE
                         + "\n" + CommandMessages.EXIT_MESSAGE_USAGE
         );
+    }
+
+    private CommandResult executeIncorrectCommand() {
+        return new CommandResult(feedbackToUser);
     }
 
     private CommandResult executeViewAllCommand() {

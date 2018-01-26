@@ -14,7 +14,6 @@ import org.junit.Test;
 
 import seedu.addressbook.commands.Command;
 import seedu.addressbook.commands.CommandMessages;
-import seedu.addressbook.commands.IncorrectCommand;
 import seedu.addressbook.data.exception.IllegalValueException;
 import seedu.addressbook.data.person.Address;
 import seedu.addressbook.data.person.Email;
@@ -236,7 +235,7 @@ public class ParserTest {
                 String.format(addCommandFormatString, validName, validPhoneArg, validEmailArg) + " " + invalidTagArg
         };
         for (String input : inputs) {
-            parseAndAssertCommandType(input, IncorrectCommand.class);
+            parseAndAssertCommandType(input, CommandMessages.INCORRECT_COMMAND_WORD);
         }
     }
 
@@ -296,7 +295,7 @@ public class ParserTest {
      */
     private void parseAndAssertIncorrectWithMessage(String feedbackMessage, String... inputs) {
         for (String input : inputs) {
-            final IncorrectCommand result = parseAndAssertCommandType(input, IncorrectCommand.class);
+            final Command result = parseAndAssertCommandType(input, CommandMessages.INCORRECT_COMMAND_WORD);
             assertEquals(result.feedbackToUser, feedbackMessage);
         }
     }
