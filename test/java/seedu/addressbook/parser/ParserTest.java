@@ -15,7 +15,6 @@ import org.junit.Test;
 import seedu.addressbook.commands.Command;
 import seedu.addressbook.commands.CommandMessages;
 import seedu.addressbook.commands.IncorrectCommand;
-import seedu.addressbook.commands.ViewCommand;
 import seedu.addressbook.data.exception.IllegalValueException;
 import seedu.addressbook.data.person.Address;
 import seedu.addressbook.data.person.Email;
@@ -125,7 +124,7 @@ public class ParserTest {
     public void parse_viewCommandNumericArg_indexParsedCorrectly() {
         final int testIndex = 2;
         final String input = "view " + testIndex;
-        final ViewCommand result = parseAndAssertCommandType(input, ViewCommand.class);
+        final Command result = parseAndAssertCommandType(input, CommandMessages.VIEW_COMMAND_WORD);
         assertEquals(result.getTargetIndex(), testIndex);
     }
 

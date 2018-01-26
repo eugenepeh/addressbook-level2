@@ -133,6 +133,8 @@ public class Command {
                 return executeListCommand();
             case CommandMessages.VIEWALL_COMMAND_WORD:
                 return executeViewAllCommand();
+            case CommandMessages.VIEW_COMMAND_WORD:
+                return executeViewCommand();
             case CommandMessages.HELP_COMMAND_WORD:
             default:
                 return executeHelpCommand();
@@ -250,6 +252,18 @@ public class Command {
                 return new CommandResult(Messages.MESSAGE_PERSON_NOT_IN_ADDRESSBOOK);
             }
             return new CommandResult(String.format(VIEWALL_MESSAGE_VIEW_PERSON_DETAILS, target.getAsTextShowAll()));
+        } catch (IndexOutOfBoundsException ie) {
+            return new CommandResult(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+    }
+
+    private CommandResult executeViewCommand() {
+        try {
+            final ReadOnlyPerson target = getTargetPerson();
+            if (!addressBook.containsPerson(target)) {
+                return new CommandResult(Messages.MESSAGE_PERSON_NOT_IN_ADDRESSBOOK);
+            }
+            return new CommandResult(String.format(VIEW_MESSAGE_VIEW_PERSON_DETAILS, target.getAsTextHidePrivate()));
         } catch (IndexOutOfBoundsException ie) {
             return new CommandResult(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }

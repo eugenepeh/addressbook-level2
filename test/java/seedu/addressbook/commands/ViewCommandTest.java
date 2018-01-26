@@ -113,7 +113,7 @@ public class ViewCommandTest {
 
         String expectedMessage = String.format(CommandMessages.VIEW_MESSAGE_VIEW_PERSON_DETAILS,
                                                 personToBeViewed.getAsTextHidePrivate());
-        assertViewBehavior(new ViewCommand(targetVisibleIndex), addressBook, relevantPersons, expectedMessage);
+        assertViewBehavior(new Command(CommandMessages.VIEW_COMMAND_WORD, targetVisibleIndex), addressBook, relevantPersons, expectedMessage);
 
         expectedMessage = String.format(CommandMessages.VIEWALL_MESSAGE_VIEW_PERSON_DETAILS,
                                                 personToBeViewed.getAsTextShowAll());
@@ -125,7 +125,7 @@ public class ViewCommandTest {
      */
     private static void assertViewError(AddressBook addressBook, List<ReadOnlyPerson> relevantPersons,
                                                         int targetVisibleIndex, String expectedMessage) {
-        assertViewBehavior(new ViewCommand(targetVisibleIndex), addressBook, relevantPersons, expectedMessage);
+        assertViewBehavior(new Command(CommandMessages.VIEW_COMMAND_WORD, targetVisibleIndex), addressBook, relevantPersons, expectedMessage);
         assertViewBehavior(new Command(CommandMessages.VIEWALL_COMMAND_WORD, targetVisibleIndex), addressBook, relevantPersons, expectedMessage);
     }
 
