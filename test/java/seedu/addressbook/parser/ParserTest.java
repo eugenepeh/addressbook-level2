@@ -14,7 +14,6 @@ import org.junit.Test;
 
 import seedu.addressbook.commands.Command;
 import seedu.addressbook.commands.CommandMessages;
-import seedu.addressbook.commands.ExitCommand;
 import seedu.addressbook.commands.FindCommand;
 import seedu.addressbook.commands.IncorrectCommand;
 import seedu.addressbook.commands.ListCommand;
@@ -82,7 +81,7 @@ public class ParserTest {
     @Test
     public void parse_exitCommand_parsedCorrectly() {
         final String input = "exit";
-        parseAndAssertCommandType(input, ExitCommand.class);
+        parseAndAssertCommandType(input, CommandMessages.EXIT_COMMAND_WORD);
     }
 
     /*

@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import seedu.addressbook.commands.Command;
 import seedu.addressbook.commands.CommandResult;
-import seedu.addressbook.commands.ExitCommand;
 import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 import seedu.addressbook.parser.Parser;
@@ -88,7 +87,7 @@ public class Main {
             recordResult(result);
             ui.showResultToUser(result);
 
-        } while (!ExitCommand.isExit(command));
+        } while (!Command.isExit(command));
     }
 
     /** Updates the {@link #lastShownList} if the result contains a list of Persons. */

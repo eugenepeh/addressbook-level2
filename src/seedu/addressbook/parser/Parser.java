@@ -13,7 +13,6 @@ import java.util.regex.Pattern;
 
 import seedu.addressbook.commands.Command;
 import seedu.addressbook.commands.CommandMessages;
-import seedu.addressbook.commands.ExitCommand;
 import seedu.addressbook.commands.FindCommand;
 import seedu.addressbook.commands.IncorrectCommand;
 import seedu.addressbook.commands.ListCommand;
@@ -94,7 +93,7 @@ public class Parser {
             return prepareViewAll(arguments);
 
         case CommandMessages.EXIT_COMMAND_WORD:
-            return new ExitCommand();
+            return new Command(CommandMessages.EXIT_COMMAND_WORD);
 
         case CommandMessages.HELP_COMMAND_WORD: // Fallthrough
         default:

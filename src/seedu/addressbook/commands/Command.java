@@ -88,6 +88,10 @@ public class Command {
         return String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, personsDisplayed.size());
     }
 
+    public static boolean isExit(Command command) {
+        return command.getCommandWord() == CommandMessages.EXIT_COMMAND_WORD; // instanceof returns false if it is null
+    }
+
     public ReadOnlyPerson getPerson() {
         return person;
     }
@@ -103,6 +107,8 @@ public class Command {
                 return executeClearCommand();
             case CommandMessages.DELETE_COMMAND_WORD:
                 return executeDeleteCommand();
+            case CommandMessages.EXIT_COMMAND_WORD:
+                return executeExitCommand();
             case CommandMessages.HELP_COMMAND_WORD:
             default:
                 return executeHelpCommand();
@@ -159,6 +165,10 @@ public class Command {
         } catch (UniquePersonList.PersonNotFoundException pnfe) {
             return new CommandResult(Messages.MESSAGE_PERSON_NOT_IN_ADDRESSBOOK);
         }
+    }
+
+    private CommandResult executeExitCommand() {
+        return new CommandResult(EXIT_MESSAGE_EXIT_ACKNOWEDGEMENT);
     }
 
     private CommandResult executeHelpCommand() {
