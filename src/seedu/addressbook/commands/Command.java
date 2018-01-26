@@ -29,33 +29,35 @@ public class Command {
     protected AddressBook addressBook;
     protected List<? extends ReadOnlyPerson> relevantPersons;
     private int targetIndex = -1;
-    private String commandWord;
-    private Person person;
+    private final String commandWord;
+    private final Person person;
     private final Set<String> keywords;
 
     public final String feedbackToUser;
-
-    /**
-     * @param targetIndex last visible listing index of the target person
-     */
-    public Command(String commandWord, int targetIndex) {
-        this.commandWord = commandWord;
-        this.setTargetIndex(targetIndex);
-        this.feedbackToUser = null;
-        this.keywords = null;
-    }
 
     public Command(String commandWord) {
         this.commandWord = commandWord;
         this.feedbackToUser = null;
         this.keywords = null;
+        this.person = null;
+    }
+
+    /**
+     * @param targetIndex last visible listing index of the target person
+     */
+    public Command(String commandWord, int targetIndex) {
+        this.setTargetIndex(targetIndex);
+        this.commandWord = commandWord;
+        this.feedbackToUser = null;
+        this.keywords = null;
+        this.person = null;
     }
 
     public Command(String commandWord, Person person) {
         this.commandWord = commandWord;
-        this.person = person;
         this.feedbackToUser = null;
         this.keywords = null;
+        this.person = person;
     }
 
     /**
@@ -65,6 +67,7 @@ public class Command {
         this.commandWord = commandWord;
         this.feedbackToUser = feedbackToUser;
         this.keywords = null;
+        this.person = null;
     }
 
     /**
@@ -75,6 +78,7 @@ public class Command {
         this.commandWord = commandWord;
         this.feedbackToUser = null;
         this.keywords = keywords;
+        this.person = null;
     }
 
     /**
@@ -93,6 +97,8 @@ public class Command {
             tagSet.add(new Tag(tagName));
         }
         this.commandWord = commandWord;
+        this.feedbackToUser = null;
+        this.keywords = null;
         this.person = new Person(
                 new Name(name),
                 new Phone(phone, isPhonePrivate),
@@ -100,12 +106,6 @@ public class Command {
                 new Address(address, isAddressPrivate),
                 new UniqueTagList(tagSet)
         );
-        this.feedbackToUser = null;
-        this.keywords = null;
-    }
-
-    public String getCommandWord() {
-        return commandWord;
     }
 
     /**
@@ -119,11 +119,7 @@ public class Command {
     }
 
     public static boolean isExit(Command command) {
-        return command.getCommandWord() == CommandMessages.EXIT_COMMAND_WORD; // instanceof returns false if it is null
-    }
-
-    public ReadOnlyPerson getPerson() {
-        return person;
+        return command.getCommandWord() == EXIT_COMMAND_WORD; // instanceof returns false if it is null
     }
 
     /**
@@ -131,29 +127,33 @@ public class Command {
      */
     public CommandResult execute(){
         switch (commandWord) {
-            case CommandMessages.ADD_COMMAND_WORD:
+            case ADD_COMMAND_WORD:
                 return executeAddCommand(person);
-            case CommandMessages.CLEAR_COMMAND_WORD:
+            case CLEAR_COMMAND_WORD:
                 return executeClearCommand();
-            case CommandMessages.DELETE_COMMAND_WORD:
+            case DELETE_COMMAND_WORD:
                 return executeDeleteCommand();
-            case CommandMessages.EXIT_COMMAND_WORD:
+            case EXIT_COMMAND_WORD:
                 return executeExitCommand();
-            case CommandMessages.FIND_COMMAND_WORD:
+            case FIND_COMMAND_WORD:
                 return executeFindCommand();
-            case CommandMessages.INCORRECT_COMMAND_WORD:
+            case INCORRECT_COMMAND_WORD:
                 return executeIncorrectCommand();
-            case CommandMessages.LIST_COMMAND_WORD:
+            case LIST_COMMAND_WORD:
                 return executeListCommand();
-            case CommandMessages.VIEWALL_COMMAND_WORD:
+            case VIEWALL_COMMAND_WORD:
                 return executeViewAllCommand();
-            case CommandMessages.VIEW_COMMAND_WORD:
+            case VIEW_COMMAND_WORD:
                 return executeViewCommand();
-            case CommandMessages.HELP_COMMAND_WORD:
+            case HELP_COMMAND_WORD:
             default:
                 return executeHelpCommand();
         }
     };
+
+    public String getCommandWord() {
+        return commandWord;
+    }
 
     /**
      * Returns a copy of keywords in this command.
@@ -185,6 +185,10 @@ public class Command {
     public void setData(AddressBook addressBook, List<? extends ReadOnlyPerson> relevantPersons) {
         this.addressBook = addressBook;
         this.relevantPersons = relevantPersons;
+    }
+
+    public ReadOnlyPerson getPerson() {
+        return person;
     }
 
     /**
@@ -247,15 +251,15 @@ public class Command {
 
     private CommandResult executeHelpCommand() {
         return new CommandResult(
-                CommandMessages.ADD_MESSAGE_USAGE
-                        + "\n" + CommandMessages.DELETE_MESSAGE_USAGE
-                        + "\n" + CommandMessages.CLEAR_MESSAGE_USAGE
-                        + "\n" + CommandMessages.FIND_MESSAGE_USAGE
-                        + "\n" + CommandMessages.LIST_MESSAGE_USAGE
-                        + "\n" + CommandMessages.VIEW_MESSAGE_USAGE
-                        + "\n" + CommandMessages.VIEWALL_MESSAGE_USAGE
-                        + "\n" + CommandMessages.HELP_MESSAGE_USAGE
-                        + "\n" + CommandMessages.EXIT_MESSAGE_USAGE
+                ADD_MESSAGE_USAGE
+                        + "\n" + DELETE_MESSAGE_USAGE
+                        + "\n" + CLEAR_MESSAGE_USAGE
+                        + "\n" + FIND_MESSAGE_USAGE
+                        + "\n" + LIST_MESSAGE_USAGE
+                        + "\n" + VIEW_MESSAGE_USAGE
+                        + "\n" + VIEWALL_MESSAGE_USAGE
+                        + "\n" + HELP_MESSAGE_USAGE
+                        + "\n" + EXIT_MESSAGE_USAGE
         );
     }
 
