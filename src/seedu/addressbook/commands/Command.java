@@ -129,6 +129,8 @@ public class Command {
                 return executeExitCommand();
             case CommandMessages.FIND_COMMAND_WORD:
                 return executeFindCommand();
+            case CommandMessages.LIST_COMMAND_WORD:
+                return executeListCommand();
             case CommandMessages.HELP_COMMAND_WORD:
             default:
                 return executeHelpCommand();
@@ -218,6 +220,11 @@ public class Command {
     private CommandResult executeFindCommand() {
         final List<ReadOnlyPerson> personsFound = getPersonsWithNameContainingAnyKeyword(keywords);
         return new CommandResult(getMessageForPersonListShownSummary(personsFound), personsFound);
+    }
+
+    private CommandResult executeListCommand() {
+        List<ReadOnlyPerson> allPersons = addressBook.getAllPersons().immutableListView();
+        return new CommandResult(getMessageForPersonListShownSummary(allPersons), allPersons);
     }
 
     private CommandResult executeHelpCommand() {

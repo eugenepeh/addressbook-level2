@@ -15,7 +15,6 @@ import org.junit.Test;
 import seedu.addressbook.commands.Command;
 import seedu.addressbook.commands.CommandMessages;
 import seedu.addressbook.commands.IncorrectCommand;
-import seedu.addressbook.commands.ListCommand;
 import seedu.addressbook.commands.ViewAllCommand;
 import seedu.addressbook.commands.ViewCommand;
 import seedu.addressbook.data.exception.IllegalValueException;
@@ -74,7 +73,7 @@ public class ParserTest {
     @Test
     public void parse_listCommand_parsedCorrectly() {
         final String input = "list";
-        parseAndAssertCommandType(input, ListCommand.class);
+        parseAndAssertCommandType(input, CommandMessages.LIST_COMMAND_WORD);
     }
 
     @Test
