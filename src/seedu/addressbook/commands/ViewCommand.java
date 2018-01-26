@@ -15,7 +15,7 @@ public class ViewCommand extends Command {
 
 
     public ViewCommand(int targetVisibleIndex) {
-        super(targetVisibleIndex);
+        super(CommandMessages.VIEW_COMMAND_WORD, targetVisibleIndex);
     }
 
 

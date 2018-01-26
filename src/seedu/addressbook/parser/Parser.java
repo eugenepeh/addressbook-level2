@@ -13,7 +13,6 @@ import java.util.regex.Pattern;
 
 import seedu.addressbook.commands.Command;
 import seedu.addressbook.commands.CommandMessages;
-import seedu.addressbook.commands.DeleteCommand;
 import seedu.addressbook.commands.ExitCommand;
 import seedu.addressbook.commands.FindCommand;
 import seedu.addressbook.commands.IncorrectCommand;
@@ -167,7 +166,7 @@ public class Parser {
     private Command prepareDelete(String args) {
         try {
             final int targetIndex = parseArgsAsDisplayedIndex(args);
-            return new DeleteCommand(targetIndex);
+            return new Command(CommandMessages.DELETE_COMMAND_WORD, targetIndex);
         } catch (ParseException pe) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, CommandMessages.DELETE_MESSAGE_USAGE));
         } catch (NumberFormatException nfe) {

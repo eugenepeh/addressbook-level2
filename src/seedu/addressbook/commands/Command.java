@@ -17,9 +17,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static seedu.addressbook.commands.CommandMessages.ADD_MESSAGE_DUPLICATE_PERSON;
-import static seedu.addressbook.commands.CommandMessages.ADD_MESSAGE_SUCCESS;
-import static seedu.addressbook.commands.CommandMessages.CLEAR_MESSAGE_SUCCESS;
+import static seedu.addressbook.commands.CommandMessages.*;
 import static seedu.addressbook.ui.TextUi.DISPLAYED_INDEX_OFFSET;
 
 /**
@@ -35,7 +33,8 @@ public class Command {
     /**
      * @param targetIndex last visible listing index of the target person
      */
-    public Command(int targetIndex) {
+    public Command(String commandWord, int targetIndex) {
+        this.commandWord = commandWord;
         this.setTargetIndex(targetIndex);
     }
 
@@ -102,6 +101,8 @@ public class Command {
                 return executeAddCommand(person);
             case CommandMessages.CLEAR_COMMAND_WORD:
                 return executeClearCommand();
+            case CommandMessages.DELETE_COMMAND_WORD:
+                return executeDeleteCommand();
             case CommandMessages.HELP_COMMAND_WORD:
             default:
                 return executeHelpCommand();
@@ -145,6 +146,19 @@ public class Command {
     private CommandResult executeClearCommand() {
         addressBook.clear();
         return new CommandResult(CLEAR_MESSAGE_SUCCESS);
+    }
+
+    private CommandResult executeDeleteCommand() {
+        try {
+            final ReadOnlyPerson target = getTargetPerson();
+            addressBook.removePerson(target);
+            return new CommandResult(String.format(DELETE_MESSAGE_DELETE_PERSON_SUCCESS, target));
+
+        } catch (IndexOutOfBoundsException ie) {
+            return new CommandResult(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        } catch (UniquePersonList.PersonNotFoundException pnfe) {
+            return new CommandResult(Messages.MESSAGE_PERSON_NOT_IN_ADDRESSBOOK);
+        }
     }
 
     private CommandResult executeHelpCommand() {

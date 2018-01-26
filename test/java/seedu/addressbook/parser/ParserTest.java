@@ -14,7 +14,6 @@ import org.junit.Test;
 
 import seedu.addressbook.commands.Command;
 import seedu.addressbook.commands.CommandMessages;
-import seedu.addressbook.commands.DeleteCommand;
 import seedu.addressbook.commands.ExitCommand;
 import seedu.addressbook.commands.FindCommand;
 import seedu.addressbook.commands.IncorrectCommand;
@@ -108,7 +107,7 @@ public class ParserTest {
     public void parse_deleteCommandNumericArg_indexParsedCorrectly() {
         final int testIndex = 1;
         final String input = "delete " + testIndex;
-        final DeleteCommand result = parseAndAssertCommandType(input, DeleteCommand.class);
+        final Command result = parseAndAssertCommandType(input, CommandMessages.DELETE_COMMAND_WORD);
         assertEquals(result.getTargetIndex(), testIndex);
     }
 
