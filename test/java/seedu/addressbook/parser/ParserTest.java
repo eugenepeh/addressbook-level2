@@ -14,7 +14,6 @@ import org.junit.Test;
 
 import seedu.addressbook.commands.Command;
 import seedu.addressbook.commands.CommandMessages;
-import seedu.addressbook.commands.FindCommand;
 import seedu.addressbook.commands.IncorrectCommand;
 import seedu.addressbook.commands.ListCommand;
 import seedu.addressbook.commands.ViewAllCommand;
@@ -177,8 +176,8 @@ public class ParserTest {
         final Set<String> keySet = new HashSet<>(Arrays.asList(keywords));
 
         final String input = "find " + String.join(" ", keySet);
-        final FindCommand result =
-                parseAndAssertCommandType(input, FindCommand.class);
+        final Command result =
+                parseAndAssertCommandType(input, CommandMessages.FIND_COMMAND_WORD);
         assertEquals(keySet, result.getKeywords());
     }
 
@@ -189,8 +188,8 @@ public class ParserTest {
 
         // duplicate every keyword
         final String input = "find " + String.join(" ", keySet) + " " + String.join(" ", keySet);
-        final FindCommand result =
-                parseAndAssertCommandType(input, FindCommand.class);
+        final Command result =
+                parseAndAssertCommandType(input, CommandMessages.FIND_COMMAND_WORD);
         assertEquals(keySet, result.getKeywords());
     }
 

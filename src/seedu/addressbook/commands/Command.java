@@ -13,6 +13,8 @@ import seedu.addressbook.data.person.UniquePersonList;
 import seedu.addressbook.data.tag.Tag;
 import seedu.addressbook.data.tag.UniqueTagList;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,6 +31,7 @@ public class Command {
     private int targetIndex = -1;
     private String commandWord;
     private Person person;
+    private final Set<String> keywords;
 
     /**
      * @param targetIndex last visible listing index of the target person
@@ -36,18 +39,31 @@ public class Command {
     public Command(String commandWord, int targetIndex) {
         this.commandWord = commandWord;
         this.setTargetIndex(targetIndex);
+        this.keywords = null;
     }
 
     protected Command() {
+        this.keywords = null;
     }
 
     public Command(String commandWord) {
         this.commandWord = commandWord;
+        this.keywords = null;
     }
 
     public Command(String commandWord, Person person) {
         this.commandWord = commandWord;
         this.person = person;
+        this.keywords = null;
+    }
+
+    /**
+     * Finds and lists all persons in address book whose name contains any of the argument keywords.
+     * Keyword matching is case sensitive.
+     */
+    public Command(String commandWord, Set<String> keywords) {
+        this.commandWord = commandWord;
+        this.keywords = keywords;
     }
 
     /**
@@ -73,11 +89,13 @@ public class Command {
                 new Address(address, isAddressPrivate),
                 new UniqueTagList(tagSet)
         );
+        this.keywords = null;
     }
 
     public String getCommandWord() {
         return commandWord;
     }
+
     /**
      * Constructs a feedback message to summarise an operation that displayed a listing of persons.
      *
@@ -109,11 +127,37 @@ public class Command {
                 return executeDeleteCommand();
             case CommandMessages.EXIT_COMMAND_WORD:
                 return executeExitCommand();
+            case CommandMessages.FIND_COMMAND_WORD:
+                return executeFindCommand();
             case CommandMessages.HELP_COMMAND_WORD:
             default:
                 return executeHelpCommand();
         }
     };
+
+    /**
+     * Returns a copy of keywords in this command.
+     */
+    public Set<String> getKeywords() {
+        return new HashSet<>(keywords);
+    }
+
+    /**
+     * Retrieves all persons in the address book whose names contain some of the specified keywords.
+     *
+     * @param keywords for searching
+     * @return list of persons found
+     */
+    private List<ReadOnlyPerson> getPersonsWithNameContainingAnyKeyword(Set<String> keywords) {
+        final List<ReadOnlyPerson> matchedPersons = new ArrayList<>();
+        for (ReadOnlyPerson person : addressBook.getAllPersons()) {
+            final Set<String> wordsInName = new HashSet<>(person.getName().getWordsInName());
+            if (!Collections.disjoint(wordsInName, keywords)) {
+                matchedPersons.add(person);
+            }
+        }
+        return matchedPersons;
+    }
 
     /**
      * Supplies the data the command will operate on.
@@ -169,6 +213,11 @@ public class Command {
 
     private CommandResult executeExitCommand() {
         return new CommandResult(EXIT_MESSAGE_EXIT_ACKNOWEDGEMENT);
+    }
+
+    private CommandResult executeFindCommand() {
+        final List<ReadOnlyPerson> personsFound = getPersonsWithNameContainingAnyKeyword(keywords);
+        return new CommandResult(getMessageForPersonListShownSummary(personsFound), personsFound);
     }
 
     private CommandResult executeHelpCommand() {

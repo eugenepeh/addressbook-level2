@@ -47,15 +47,15 @@ public class FindCommandTest {
      * the result matches the persons in the expectedPersonList exactly.
      */
     private void assertFindCommandBehavior(String[] keywords, List<ReadOnlyPerson> expectedPersonList) {
-        FindCommand command = createFindCommand(keywords);
+        Command command = createFindCommand(keywords);
         CommandResult result = command.execute();
 
         assertEquals(Command.getMessageForPersonListShownSummary(expectedPersonList), result.feedbackToUser);
     }
 
-    private FindCommand createFindCommand(String[] keywords) {
+    private Command createFindCommand(String[] keywords) {
         final Set<String> keywordSet = new HashSet<>(Arrays.asList(keywords));
-        FindCommand command = new FindCommand(keywordSet);
+        Command command = new Command(CommandMessages.FIND_COMMAND_WORD, keywordSet);
         command.setData(addressBook, Collections.emptyList());
         return command;
     }
